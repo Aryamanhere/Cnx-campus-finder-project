@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus / 26 — SOA Campus Event Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- main section-->
+  <div class="site-wrapper" id="front">
+    <header class="hero-section top-section" id="top">
+      <!-- Nav Bar -->
+      <nav class="nav-bar">
+        <a href="#top" class="brand-logo" aria-label="SOA Campus">
+          <span class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7cpdQ49jefkBiyJZ51O3dM6qpFw1F_WwJEyjgW-IjxA&s" alt="SOA Campus" width="28" height="28">
+          </span>
+          <span class="brand-title title">CAMPUS</span>
+          <span class="brand-separator sepa">/</span>
+          <span class="brand-num name">26</span>
+        </a>
+
+        <div class="nav-links nav-link-group">
+          <a href="#events" class="nav-link active" data-target="events">Events</a>
+          <a href="#categories-drawer" class="nav-link" id="navCategoriesBtn">Categories</a>
+          <a href="#about-modal" class="nav-link" id="navAboutBtn">About</a>
+        </div>
+
+        <div class="nav-actions">
+          <button class="icon-btn" id="navSearchTrigger" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          <button class="btn btn-outline" id="btnGetUpdates">
+            <span>Get Updates</span>
+            <svg class="arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <div class="hero-body main-body">
+        <div class="hero-text-col main-text-col">
+          <h1 class="hero-headline main-headline">
+            WHAT’S <br>
+            HAPPENING <br>
+            ON CAMPUS?
+          </h1>
+          <p class="hero-subhead main-sub">
+            Discover events, workshops and experiences happening around SOA campus.
+          </p>
+        </div>
+        <div class="hero-visual-col" aria-label="Campus building with rising sun">
+          <div class="campus-hero-stage" id="campusHeroStage">
+            <!-- building and sunrise effect -->
+            <div class="sunrise-glow"></div>
+
+            <div class="rising-sun" id="risingSun">
+              <div class="sun-flare"></div>
+              <div class="sun-core"></div>
+            </div>
+
+            <div class="solar-rays" aria-hidden="true">
+              <div class="ray ray-1"></div>
+              <div class="ray ray-2"></div>
+              <div class="ray ray-3"></div>
+              <div class="ray ray-4"></div>
+              <div class="ray ray-5"></div>
+            </div>
+
+            <div class="campus-silhouette-wrap">
+              <img 
+                src="images/ChatGPT%20Image%2023%20Nov%202026,%2010_01_10.png"
+                alt="Campus building silhouette" 
+                class="campus-silhouette-img"
+                id="campusSilhouetteImg"
+              >
+            </div>
+
+            <div class="campus-ground-fade"></div>
+
+            <button class="sunrise-replay-btn" id="sunriseReplayBtn" title="Replay rising sun effect">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+              <span>Sunrise Effect</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-filter-container search-search-filter-container" id="filterBar">
+        <div class="search-input-wrapper">
+          <span class="search-icon search-input-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="search-input searchInput" 
+            placeholder="Search events" 
+            autocomplete="off"
+            aria-label="Search events by name"
+          >
+          <button id="searchClearBtn" class="search-clear-btn searchClearBtn" aria-label="Clear search query" style="display: none;">
+            &times;
+          </button>
+        </div>
+
+        <div class="custom-dropdown" id="categoryDropdownContainer">
+          <button class="dropdown-trigger" id="categoryTrigger" aria-haspopup="listbox" aria-expanded="false">
+            <span id="selectedCategoryLabel">All Categories</span>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="categoryMenu" role="listbox" tabindex="-1">
+            <button class="dropdown-item active" data-value="all" role="option" aria-selected="true">All Categories</button>
+            <button class="dropdown-item" data-value="TECHNOLOGY" role="option" aria-selected="false">Technology</button>
+            <button class="dropdown-item" data-value="CULTURAL" role="option" aria-selected="false">Cultural</button>
+            <button class="dropdown-item" data-value="SPORTS" role="option" aria-selected="false">Sports</button>
+            <button class="dropdown-item" data-value="CREATIVE" role="option" aria-selected="false">Creative</button>
+            <button class="dropdown-item" data-value="MEDIA" role="option" aria-selected="false">Media</button>
+          </div>
+        </div>
+
+        <div class="custom-dropdown" id="dateDropdownContainer">
+          <button class="dropdown-trigger" id="dateTrigger" aria-haspopup="listbox" aria-expanded="false">
+            <span id="selectedDateLabel">All Dates</span>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="dateMenu" role="listbox" tabindex="-1">
+            <button class="dropdown-item active" data-value="all" role="option" aria-selected="true">All Dates</button>
+            <button class="dropdown-item" data-value="nov" role="option" aria-selected="false">November 2026</button>
+            <button class="dropdown-item" data-value="dec" role="option" aria-selected="false">December 2026</button>
+            <button class="dropdown-item" data-value="weekend" role="option" aria-selected="false">This Weekend</button>
+          </div>
+        </div>
+
+        <button class="clear-filters-btn" id="clearFiltersBtn" title="Reset all filters">
+          <span>Clear Filters</span>
+          <svg class="reload-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+
+    <!-- FEATURED EVENTS SECTION-->
+    <main class="events-section" id="events">
+      <div class="section-header">
+        <div class="title-group">
+          <h2 class="section-title" id="eventsSectionTitle">FEATURED EVENTS</h2>
+        </div>
+
+        <div class="header-controls">
+          <span class="events-count" id="eventsCount">08 EVENTS</span>
+          
+          <button class="carousel-btn prev-btn" id="carouselPrevBtn" aria-label="Previous events">
+              <div class="carousel-nav-buttons">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button class="carousel-btn next-btn" id="carouselNextBtn" aria-label="Next events">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-outer" id="carouselOuter">
+        <div class="carousel-track" id="carouselTrack" role="region" aria-label="Featured events list">
+        </div>
+      </div>
+
+      <div class="carousel-progress-wrapper" aria-hidden="true">
+        <div class="carousel-progress-track">
+          <div class="carousel-progress-thumb" id="carouselProgressThumb"></div>
+        </div>
+      </div>
+
+      <!-- Empty State (Displayed when search/filter has 0 results) -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-icon-box">
+          <!-- Minimalist Stroked Calendar Icon matching mockup -->
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <h3 class="empty-title">No events found</h3>
+        <p class="empty-desc">Try a different keyword or clear the filters to see all events.</p>
+        <button class="btn btn-outline-white" id="emptyClearFiltersBtn">
+          <span>Clear Filters</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+        </button>
+      </div>
+    </main>
+
+    <!-- FOOTER / STATS BAR -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="footer-brand">CAMPUS / 26</span>
+          <span class="footer-tagline">Connecting student life, arts, culture &amp; innovation.</span>
+        </div>
+        <div class="footer-right">
+          <div class="spec-pills">
+            <span class="spec-pill">Editorial Layout</span>
+            <span class="spec-pill">Netflix-Style Hover Video</span>
+            <span class="spec-pill">Search &amp; Filters</span>
+            <span class="spec-pill">Event Detail Page</span>
+            <span class="spec-pill">Responsive Design</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div> <!-- End site-wrapper -->
+
+
+  <div class="modal-backdrop" id="detailModalBackdrop" aria-hidden="true">
+    <div class="modal-dialog event-detail-modal" id="eventDetailModal" role="dialog" aria-modal="true" aria-labelledby="detailEventTitle">
+      <button class="modal-close-btn" id="closeDetailModalBtn" aria-label="Close event details">
+        &times;
+      </button>
+
+      <div class="detail-banner" id="detailBanner">
+        <div class="detail-banner-overlay"></div>
+        <div class="detail-nav-mini">
+          <span class="mini-brand">CAMPUS / 26</span>
+          <div class="mini-links">
+            <span>Events</span>
+            <span>Categories</span>
+            <span>About</span>
+          </div>
+          <button class="btn btn-sm btn-outline-white" id="detailQuickUpdateBtn">Get Updates ↗</button>
+        </div>
+
+        <div class="detail-hero-content">
+          <div class="detail-category-badge" id="detailCategoryBadge">CULTURAL</div>
+          <h1 class="detail-title" id="detailEventTitle">Music Night</h1>
+          
+          <div class="detail-action-row">
+            <button class="btn btn-watch-preview" id="detailWatchPreviewBtn">
+              <span class="play-circle-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </span>
+              <span>Watch Preview</span>
+            </button>
+          </div>
+
+          <!-- Event Meta Chips -->
+          <div class="detail-meta-bar">
+            <div class="meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span id="detailDate">24 Nov 2026</span>
+            </div>
+
+            <div class="meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span id="detailTime">6:00 PM</span>
+            </div>
+
+            <div class="meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span id="detailVenue">Main Auditorium</span>
+            </div>
+
+            <button class="btn btn-primary btn-register-cta" id="detailRegisterBtn">
+              <span>Register Now</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail Lower Body (Cream / Editorial Sub-section) -->
+      <div class="detail-lower-content">
+        <div class="detail-grid">
+          <!-- Left Column: Description & Metadata -->
+          <div class="detail-main-info">
+            <h3 class="detail-subhead">ABOUT THE EVENT</h3>
+            <p class="detail-description" id="detailDescription">
+              The biggest music night of the year! A night filled with live performances, campus bands, and special guests. Join us for an evening of music, energy and unforgettable vibes.
+            </p>
+
+            <div class="detail-specs-grid">
+              <div class="spec-cell">
+                <span class="spec-label">Category</span>
+                <span class="spec-val" id="detailSpecCategory">Cultural</span>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-label">Audience</span>
+                <span class="spec-val" id="detailSpecAudience">Open to All</span>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-label">Entry</span>
+                <span class="spec-val text-accent" id="detailSpecEntry">Free</span>
+              </div>
+            </div>
+
+            <div class="detail-share-actions">
+              <button class="btn btn-subtle" id="detailShareBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+                <span>Share Event</span>
+              </button>
+
+              <button class="btn btn-subtle" id="detailAddToCalendarBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>Add to Calendar (.ics)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="detail-gallery-col">
+            <div class="gallery-header">
+              <h3 class="detail-subhead">GALLERY</h3>
+              <button class="gallery-view-all" id="galleryViewAllBtn">View All ↗</button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+            </div>
+          </div>
+        </div>
+
+        <div class="hackathons-section" id="detailHackathonsContainer" style="display: none;">
+          <div class="hackathons-section-header">
+            <div class="hackathons-title-group">
+              <span class="modal-badge">SPECIALIZED COMPETITIONS</span>
+              <h3 class="hackathons-heading">Campus Hackathon Lineup</h3>
+              <p class="hackathons-sub">Browse and register for individual hackathons across campus this semester.</p>
+            </div>
+            <div class="hackathons-stats">
+              <div class="stat-pill">
+                <span class="stat-number" id="hackathonCountBadge">6</span>
+                <span class="stat-text">Competitions</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-number">35,500</span>
+                <span class="stat-text">Prize Grants</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hackathon-filter-tabs" id="hackathonTrackTabs">
+            <button class="hackathon-tab-btn active" data-track="all">All Hackathons (6)</button>
+            <button class="hackathon-tab-btn" data-track="AI">AI & Agents</button>
+            <button class="hackathon-tab-btn" data-track="Web3">Web3 & DeFi</button>
+            <button class="hackathon-tab-btn" data-track="HealthTech">HealthTech</button>
+            <button class="hackathon-tab-btn" data-track="CleanTech">CleanTech</button>
+            <button class="hackathon-tab-btn" data-track="Security">CyberSec</button>
+            <button class="hackathon-tab-btn" data-track="XR">Spatial & Games</button>
+          </div>
+
+          <div class="hackathon-cards-grid" id="hackathonCardsGrid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal-backdrop" id="registerModalBackdrop" aria-hidden="true">
+    <div class="modal-dialog register-modal" id="registerModal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeRegisterModalBtn" aria-label="Close registration">&times;</button>
+      
+      <div id="registerFormView">
+        <div class="register-header">
+          <span class="modal-badge">PASS RESERVATION</span>
+          <h2 class="register-title" id="regFormEventTitle">Music Night</h2>
+          <p class="register-sub">Free student pass registration. Instant confirmation.</p>
+        </div>
+
+        <form id="ticketRegisterForm" class="register-form">
+          <div class="form-group">
+            <label for="regFullName">Full Name</label>
+            <input type="text" id="regFullName" required placeholder="Alex Rivera" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">Campus Email</label>
+            <input type="email" id="regEmail" required placeholder="alex@campus.edu" class="form-input">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regStudentId">Student / Attendee ID</label>
+              <input type="text" id="regStudentId" required placeholder="C26-8849" class="form-input">
+            </div>
+            <div class="form-group">
+              <label for="regPassCount">Number of Passes</label>
+              <select id="regPassCount" class="form-input">
+                <option value="1">1 Pass</option>
+                <option value="2">2 Passes</option>
+                <option value="3">3 Passes</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Confirm Pass Reservation</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div id="registerPassView" style="display: none;">
+        <div class="ticket-pass-card">
+          <div class="ticket-pass-header">
+            <div class="pass-brand">CAMPUS / 26 PASS</div>
+            <span class="pass-status">CONFIRMED</span>
+          </div>
+
+          <div class="ticket-pass-body">
+            <h3 class="pass-event-name" id="ticketPassEvent">Music Night</h3>
+            <div class="pass-info-grid">
+              <div>
+                <span class="pass-dim">HOLDER</span>
+                <p id="ticketPassName">Alex Rivera</p>
+              </div>
+              <div>
+                <span class="pass-dim">PASS ID</span>
+                <p id="ticketPassId">C26-MN-9921</p>
+              </div>
+              <div>
+                <span class="pass-dim">DATE &amp; TIME</span>
+                <p id="ticketPassDate">24 Nov 2026, 6:00 PM</p>
+              </div>
+              <div>
+                <span class="pass-dim">VENUE</span>
+                <p id="ticketPassVenue">Main Auditorium</p>
+              </div>
+            </div>
+
+            <div class="pass-qr-box">
+              <canvas id="ticketQrCanvas" width="140" height="140"></canvas>
+              <span class="qr-label">Scan at entry gate</span>
+            </div>
+          </div>
+
+          <div class="ticket-pass-footer">
+            <button class="btn btn-outline-white btn-sm" id="downloadTicketBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Save Ticket Pass</span>
+            </button>
+            <button class="btn btn-primary btn-sm" id="regDoneBtn">Done</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="modal-backdrop" id="newsletterModalBackdrop" aria-hidden="true">
+    <div class="modal-dialog newsletter-modal" id="newsletterModal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeNewsletterModalBtn" aria-label="Close newsletter">&times;</button>
+      <div class="newsletter-content">
+        <span class="modal-badge">STAY IN THE LOOP</span>
+        <h2 class="modal-headline">Get Campus Updates</h2>
+        <p class="modal-desc">Weekly digest of student hackathons, underground gigs, screenings and sports rallies.</p>
+        
+        <form id="newsletterForm" class="newsletter-form">
+          <div class="topic-chips">
+            <label class="topic-chip active">
+              <input type="checkbox" name="topics" value="cultural" checked>
+              <span>Music &amp; Culture</span>
+            </label>
+            <label class="topic-chip active">
+              <input type="checkbox" name="topics" value="tech" checked>
+              <span>Tech &amp; Hackathons</span>
+            </label>
+            <label class="topic-chip">
+              <input type="checkbox" name="topics" value="sports">
+              <span>Sports Leagues</span>
+            </label>
+            <label class="topic-chip">
+              <input type="checkbox" name="topics" value="creative">
+              <span>Arts &amp; Cinema</span>
+            </label>
+          </div>
+
+          <div class="newsletter-input-group">
+            <input type="email" id="newsletterEmailInput" required placeholder="Enter student email..." class="form-input">
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </div>
+          <div id="newsletterSuccessMsg" class="success-banner" style="display: none;">
+            ✓ You're all set! Check your inbox for the upcoming lineup.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal-backdrop" id="aboutModalBackdrop" aria-hidden="true">
+    <div class="modal-dialog about-modal" id="aboutModal" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="closeAboutModalBtn" aria-label="Close about">&times;</button>
+      <div class="about-content">
+        <div class="brand-logo mb-3">
+          <span class="brand-title">CAMPUS</span>
+          <span class="brand-separator">/</span>
+          <span class="brand-num">26</span>
+        </div>
+        <h2 class="modal-headline">Editorial Campus Experience</h2>
+        <p class="about-lead">
+          Campus / 26 is an editorial event platform designed to celebrate university life, spontaneous student culture, innovation sprints, and performance arts.
+        </p>
+        <div class="about-features-grid">
+          <div class="feature-card">
+            <h4>Live Hover Preview</h4>
+            <p>dynamic card previews .</p>
+          </div>
+          <div class="feature-card">
+            <h4>Instant Free Passes</h4>
+            <p>Generate digital tickets with QR check-in codes directly in your browser.</p>
+          </div>
+          <div class="feature-card">
+            <h4>Precision Search</h4>
+            <p>Real-time filtering across categories, dates, and keywords with 0 latency.</p>
+          </div>
+        </div>
+        <div class="about-footer-actions">
+          <button class="btn btn-primary" id="aboutCloseCta">Explore Events Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
